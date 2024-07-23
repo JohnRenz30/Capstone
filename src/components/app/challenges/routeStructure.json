@@ -1,0 +1,18 @@
+{
+  "Lesson": {
+    "Math": {},
+    "English": {}
+  },
+  "Quiz": {
+    "Math": {
+      "ArithmeticOperation": {},
+      "Exponent": {},
+      "Fractions": {},
+      "Decimal": {},
+      "Geometry": {},
+      "Integer": {},
+      "Probability": {}
+    },
+    "English": {}
+  }
+}

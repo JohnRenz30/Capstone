@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//npx prisma migrate dev --name init
+//npx prisma migrate dev
+//This command does two things:
+
+// //It creates a new SQL migration file for this migration
+// //It runs the SQL migration file against the database
+
+//npx prisma generate
+//only do the prisma generate if the dev is closed
+
+enum Role {
+  TEACHER
+  STUDENT
+}
+
+enum Sex {
+  MALE
+  FEMALE
+}
+
+model User {
+  id                String                @id @default(cuid())
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  extendedAt        DateTime              @default(now())
+  studentID         String?               @unique
+  email             String?               @unique
+  username          String                @unique
+  hashedPass        String
+  role              Role                  @default(STUDENT)
+  isArchived        Boolean               @default(false)
+  isEmailVerified   Boolean               @default(false)
+  profile Profile?
+}
+
+model Profile {
+  id                String                @id @default(cuid())
+  lastName          String
+  firstName         String
+  middleInitial     String?
+  gender            String?
+  sex               Sex
+  lrn               String?
+  studID            String?
+  birthDay          DateTime?
+  gradeLevel        String?
+  acadYR            String?
+  gpersonLastName   String?
+  gpersonFirstName  String?
+  gpersonAddress    String?
+  gpersonContact    String?
+  fbProfileURL      String?
+  phoneNumber       String?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  user              User                  @relation(fields: [userId], references: [id])
+  userId            String                @unique
+}
+
